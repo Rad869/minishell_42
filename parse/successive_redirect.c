@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   successive_redirect.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrabeari <rrabeari@student.42antananari    +#+  +:+       +#+        */
+/*   By: rrabeari <rrabeari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 08:32:56 by rrabeari          #+#    #+#             */
-/*   Updated: 2025/02/05 11:29:38 by rrabeari         ###   ########.fr       */
+/*   Updated: 2025/03/26 09:12:43 by rrabeari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	jump_to_next(char *line, char c)
+static int	jump_to_next(char *line, char c)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	jump_to_next(char *line, char c)
 	return (0);
 }
 
-int	check_multi_double(char *line, char c, int *j)
+static int	check_multi_double(char *line, char c, int *j)
 {
 	int	i;
 
@@ -50,7 +50,7 @@ int	check_multi_double(char *line, char c, int *j)
 	return (1);
 }
 
-int	check_multi_single(char *line, int *j)
+static int	check_multi_single(char *line, int *j)
 {
 	int	i;
 

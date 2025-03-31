@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_command_in_path.c                          :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cramaros <cramaros@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/08 10:08:29 by cramaros          #+#    #+#             */
-/*   Updated: 2025/02/08 10:08:58 by cramaros         ###   ########.fr       */
+/*   Created: 2025/03/17 07:35:34 by cramaros          #+#    #+#             */
+/*   Updated: 2025/03/29 08:38:23 by cramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int execute_command_in_path(int argc, char *argv[])
+int	ft_unset(int argc, char **argv)
 {
-    if (argc < 1)
-        return 0;
-    const char *command = argv[0];
+	int	i;
 
-    if (strcmp(command, "exit") == 0) 
-        execute_builtin_exit();
-
-    if (is_absolute_path(command))
-        return execute_absolute_command(command, argv);
-
-    return find_command_in_path(command, argv);
+	if (argc < 2)
+	{
+		write(2, "unset: missing argument\n", 24);
+		return (1);
+	}
+	i = 1;
+	while (i < argc)
+	{
+		if (unsetenv(argv[i]) == -1)
+		{
+			perror("unset");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
-
