@@ -6,7 +6,7 @@
 /*   By: rrabeari <rrabeari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:31:12 by rrabeari          #+#    #+#             */
-/*   Updated: 2025/03/31 00:47:02 by rrabeari         ###   ########.fr       */
+/*   Updated: 2025/04/02 07:03:42 by rrabeari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static char	*get_quote(char *line, int *i, char c)
 	while (line[*i + j] && line[*i + j] != c)
 		j++;
 	value = (char *) ft_calloc(j + 2, sizeof(char));
-	*i += 1;
-	while (line[*i] && line[*i] != c)
+	while (line[*i] && line[*i + 1] != c)
 	{
 		value[k] = line[*i];
 		k++;
@@ -49,7 +48,7 @@ static char	*get_special_char(char *line, int *i)
 	return (ft_strdup(""));
 }
 
-static void	add_last_list(t_list_args **list, char *content)
+void	add_last_list(t_list_args **list, char *content)
 {
 	t_list_args	*tmp;
 	t_list_args	*tmp2;

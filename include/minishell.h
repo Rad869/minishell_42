@@ -6,7 +6,7 @@
 /*   By: rrabeari <rrabeari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 07:02:54 by rrabeari          #+#    #+#             */
-/*   Updated: 2025/03/31 08:12:27 by rrabeari         ###   ########.fr       */
+/*   Updated: 2025/04/02 05:24:18 by rrabeari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,25 @@ typedef struct s_list_args
 	struct s_list_args	*next;
 }	t_list_args;
 
+typedef enum e_redirect_type
+{
+	INPUT_REDIRECT =  1,
+	OUTPUT_REDIRECT = 2,
+	HEREDOC = 3,
+	OUTPUT_APPEND = 4
+}	t_redirect_type;
+
+typedef struct s_pipe
+{
+	t_list_args		*content;
+	struct s_pipe	*next;
+} t_pipe;
+
 typedef struct s_general
 {
 	t_env		*env;
 	t_list_args	*args;
+	t_pipe		*pipe_list;
 	int			last_exit_status;
 }	t_general;
 
@@ -55,6 +70,7 @@ int				error_management(char	*line);
 //---------------------------------Utils------------------------------------
 t_env			*get_env(char **env);
 void			free_env(t_env *env);
+void			free_pipe(t_pipe **pipe_list);
 t_list_args		*get_list_args(char *line);
 void			free_list_args(t_list_args **args);
 int				is_special(char *line);
@@ -62,9 +78,12 @@ char			*get_path(t_env *env);
 void			double_free(char **argv);
 char			*get_full_p(char *env_path, char *cmd);
 char			**convert_list_to_char(t_list_args *args);
-t_general		*init(char **env_arg);
+t_general		*init_general(char **env_arg);
+t_pipe			*init_pipe();
 void			put_full_path(char **cmd, t_general *general);
 int				get_entry(t_general *general);
+void			add_last_list(t_list_args **list, char *content);
+void			to_pipe(t_general *general);
 
 
 int	execute_command(int argc, char **argv);

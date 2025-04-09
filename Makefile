@@ -10,6 +10,7 @@ PARSE_NAME =	unique_quote \
 				successive_redirect \
 				get_list_args \
 				put_full_path \
+				to_pipe
 
 UTILS_NAME =	get_env \
 				free_list \
