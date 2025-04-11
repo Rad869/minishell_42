@@ -12,19 +12,22 @@
 
 #include "../include/minishell.h"
 
-static t_general	*get_general_instance(void)
+t_general	*get_general_instance(void)
 {
-	static t_general	*instance;
-
-	instance = NULL;
+	static t_general	*instance = NULL;
 	return (instance);
 }
 
-void	handle_sigint(int sig, t_general *general)
+void	set_general_instance(t_general *general)
 {
-	t_general	*general;
+	static t_general	*instance = NULL;
+	if (general != NULL)
+		instance = general;
+}
 
-	general = get_general_instance();
+void	handle_sigint(int sig)
+{
+	t_general	*general = get_general_instance();
 	if (!general)
 		return ;
 	if (general->signal->child_pid == 0 && !general->signal->in_execution)
@@ -43,11 +46,9 @@ void	handle_sigint(int sig, t_general *general)
 	(void)sig;
 }
 
-void	handle_sigquit(int sig, t_general *general)
+void	handle_sigquit(int sig)
 {
-	t_general	*general;
-
-	general = get_general_instance();
+	t_general	*general = get_general_instance();
 	if (!general)
 		return ;
 	if (general->signal->child_pid != 0)
@@ -63,7 +64,7 @@ void	init_signals(t_general *general)
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
 
-	get_general_instance() = general;
+	set_general_instance(general);
 	sa_int.sa_handler = handle_sigint;
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = SA_RESTART;

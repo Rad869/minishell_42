@@ -107,8 +107,10 @@ int	ft_unset(int argc, char **argv);
 int	ft_exit(int argc, char **argv);
 
 //interactive_mode
-void	handle_sigint(int sig, t_general *general);
-void	handle_sigquit(int sig, t_general *general);
-void	init_signals(t_general *general);
-void	handle_eof(t_general *general);
+void		handle_sigint(int sig);
+void		handle_sigquit(int sig);
+void		init_signals(t_general *general);
+t_general	*get_general_instance(void);
+void		set_general_instance(t_general *general);
+void		handle_eof(t_general *general);
 #endif
