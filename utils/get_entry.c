@@ -17,7 +17,10 @@ int	get_entry(t_general *general)
 	char	*entry;
 
 	entry = NULL;
+	signal_handler(1);
 	entry = readline("Minishell>");
+	if (entry == NULL)
+		handle_eof(general);
 	if (!error_management(entry))
 		return (free(entry), perror("Minishell: parse error\n"), 0);
 	general->args = get_list_args(entry);

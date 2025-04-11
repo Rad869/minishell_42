@@ -22,7 +22,15 @@
 # include <string.h>
 # include <dirent.h>
 # include <sys/wait.h>
+# include <signal.h>
 # include "../libft/libft.h"
+
+typedef struct s_signal
+{
+	pid_t	child_pid;
+	int		exit_status;
+	int		in_execution;
+}	t_signal;
 
 typedef struct s_env
 {
@@ -57,6 +65,7 @@ typedef struct s_general
 	t_list_args	*args;
 	t_pipe		*pipe_list;
 	int			last_exit_status;
+	t_signal	*signal;
 }	t_general;
 
 /*
@@ -96,4 +105,10 @@ int	ft_export(int argc, char **argv);
 int	ft_env(int argc, char **argv);
 int	ft_unset(int argc, char **argv);
 int	ft_exit(int argc, char **argv);
+
+//interactive_mode
+void	handle_sigint(int sig, t_general *general);
+void	handle_sigquit(int sig, t_general *general);
+void	init_signals(t_general *general);
+void	handle_eof(t_general *general);
 #endif
