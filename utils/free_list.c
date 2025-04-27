@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrabeari <rrabeari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rrabeari <rrabeari@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 23:33:40 by rrabeari          #+#    #+#             */
-/*   Updated: 2025/03/31 00:48:33 by rrabeari         ###   ########.fr       */
+/*   Updated: 2025/04/24 23:54:02 by rrabeari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,28 @@ void	free_env(t_env *env)
 	{
 		env = tmp;
 		free(env->name);
-		free(env->value);
+		if (env->value)
+			free(env->value);
 		tmp = env->next;
 		free(env);
 	}
 	free(tmp->name);
-	free(tmp->value);
+	if (tmp->value)
+		free(tmp->value);
 	free(tmp);
+}
+
+void	remove_elem_list(t_list_args *prev, t_list_args *n,
+			t_list_args *value, t_pipe *p)
+{
+	free(value->next->content);
+	free(value->next);
+	free(value->content);
+	free(value);
+	if (prev)
+		prev->next = n;
+	else
+		p->content = n;
+	if (n)
+		n->prev = prev;
 }

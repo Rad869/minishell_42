@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_full_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrabeari <rrabeari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rrabeari <rrabeari@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 23:45:02 by rrabeari          #+#    #+#             */
-/*   Updated: 2025/03/31 07:55:54 by rrabeari         ###   ########.fr       */
+/*   Updated: 2025/04/24 00:14:30 by rrabeari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_in_directory(char *dir_arg, char *cmd)
 {
-	DIR*			dir;
+	DIR				*dir;
 	struct dirent	*elements;
 
 	dir = opendir(dir_arg);
@@ -23,8 +23,8 @@ static int	is_in_directory(char *dir_arg, char *cmd)
 	elements = readdir(dir);
 	while (elements != NULL)
 	{
-		if (elements->d_type != DT_DIR &&
-			ft_strncmp(elements->d_name, cmd, 100) == 0)
+		if (elements->d_type != DT_DIR \
+			&& ft_strncmp(elements->d_name, cmd, 100) == 0)
 		{
 			closedir(dir);
 			return (1);
@@ -45,7 +45,7 @@ char	*get_full_p(char *env_path, char *cmd)
 	value = NULL;
 	i = 0;
 	if (env_path == NULL)
-		return (NULL);
+		return (cmd);
 	env_path_list = ft_split(env_path, ':');
 	while (env_path_list[i] != NULL)
 	{

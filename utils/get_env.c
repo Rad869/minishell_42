@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrabeari <rrabeari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rrabeari <rrabeari@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:47:09 by rrabeari          #+#    #+#             */
-/*   Updated: 2025/03/31 01:11:00 by rrabeari         ###   ########.fr       */
+/*   Updated: 2025/04/18 07:00:01 by rrabeari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static char	*get_env_name(char *line)
+char	*get_env_name(char *line)
 {
 	int		i;
 	char	*name;
@@ -30,7 +30,7 @@ static char	*get_env_name(char *line)
 	return (name);
 }
 
-static char	*get_env_value(char *line)
+char	*get_env_value(char *line)
 {
 	int	i;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_full_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrabeari <rrabeari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rrabeari <rrabeari@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 01:45:54 by rrabeari          #+#    #+#             */
-/*   Updated: 2025/03/31 07:56:08 by rrabeari         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:00:31 by rrabeari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	put_full_path(char **cmd, t_general *general)
 	env = general->env;
 	path = get_path(env);
 	value = get_full_p(path, *cmd);
-	if (ft_strncmp(value, *cmd, ft_strlen(*cmd)) != 0)
+	if (*cmd && ft_strncmp(value, *cmd, ft_strlen(*cmd)) != 0)
 	{
 		free (*cmd);
 		*cmd = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrabeari <rrabeari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rrabeari <rrabeari@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 12:57:51 by rrabeari          #+#    #+#             */
-/*   Updated: 2025/03/27 15:15:17 by rrabeari         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:25:02 by rrabeari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 typedef struct s_list
 {
@@ -27,6 +31,7 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
+int		ft_strcmp(char *s1, char *s2);
 size_t	ft_strlen(const char *s);
 void	*ft_memset(void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
@@ -66,5 +71,8 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+char	*get_next_line(int fd);
+char	*get_full_line(int fd, char *stock, char *buffer);
+char	*store_static_var(char *return_value);
 
 #endif

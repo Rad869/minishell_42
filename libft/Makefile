@@ -20,6 +20,7 @@ FILE = ft_strlen \
 			 ft_memchr \
 			 ft_memcmp \
 			 ft_strnstr \
+			 ft_strcmp \
 			 ft_atoi \
 			 ft_memmove \
 			 ft_calloc \
@@ -34,6 +35,7 @@ FILE = ft_strlen \
 			 ft_putstr_fd \
 			 ft_putendl_fd \
 			 ft_putnbr_fd \
+			 get_next_line
 
 FILEBONUS = ft_lstnew_bonus.c \
 			ft_lstadd_front_bonus.c \
@@ -59,6 +61,7 @@ $(NAME): $(SRC)
 	@cc -c -Wall -Wextra -Werror $(SRC)
 	@ar -rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
+	@stty sane
 
 clean:
 	@rm -f $(OBJS) $(OBJSBONUS)

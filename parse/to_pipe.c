@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   to_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrabeari <rrabeari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rrabeari <rrabeari@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:20:33 by rrabeari          #+#    #+#             */
-/*   Updated: 2025/04/02 05:39:41 by rrabeari         ###   ########.fr       */
+/*   Updated: 2025/04/27 10:53:38 by rrabeari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	append_pipe_content(t_general *general, char *content)
 	add_last_list(&(*last_pipe)->content, content);
 }
 
-static void add_pipe(t_general *general)
+static void	add_pipe(t_general *general)
 {
 	t_pipe	**pipe_var;
 
@@ -36,7 +36,34 @@ static void add_pipe(t_general *general)
 	*pipe_var = init_pipe();
 }
 
-void	to_pipe(t_general *general)
+static void	parse_each_pipe(t_pipe **pip)
+{
+	t_pipe	**tmp;
+	t_pipe	**tmp1;
+
+	tmp = pip;
+	while (*tmp)
+	{
+		tmp1 = &((*tmp)->next);
+		parse_redir(tmp);
+		tmp = tmp1;
+	}
+}
+
+static void	count_cmds(t_general *general)
+{
+	t_pipe	*tmp;
+
+	tmp = general->pipe_list;
+	while (tmp)
+	{
+		general->nbr_cmds++;
+		tmp = tmp->next;
+	}
+	affect_heredoc_name(general->pipe_list);
+}
+
+int	to_pipe(t_general *general)
 {
 	t_list_args	*tmp;
 	t_list_args	*tmp2;
@@ -54,21 +81,10 @@ void	to_pipe(t_general *general)
 		append_pipe_content(general, ft_strdup(tmp->content));
 		tmp = tmp2;
 	}
-	free_list_args(&general->args);
+	parse_each_pipe(&general->pipe_list);
+	change_expand_pipe(general->pipe_list, general);
+	count_cmds(general);
+	free_list_args(&(general->args));
 	general->args = NULL;
-}
-
-void	free_pipe(t_pipe **pipe_list)
-{
-	t_pipe	*tmp_pipe;
-	t_pipe	*tmp2_pipe;
-
-	tmp_pipe = *pipe_list;
-	while(tmp_pipe)
-	{
-		tmp2_pipe = tmp_pipe->next;
-		free_list_args(&tmp_pipe->content);
-		free(tmp_pipe);
-		tmp_pipe = tmp2_pipe;
-	}
+	return (all_heredoc(general));
 }

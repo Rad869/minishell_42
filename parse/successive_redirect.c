@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   successive_redirect.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrabeari <rrabeari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rrabeari <rrabeari@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 08:32:56 by rrabeari          #+#    #+#             */
-/*   Updated: 2025/03/26 09:12:43 by rrabeari         ###   ########.fr       */
+/*   Updated: 2025/04/26 21:23:50 by rrabeari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,19 @@ static int	check_multi_single(char *line, int *j)
 	return (1);
 }
 
+static int	check_pipe_redir(char *line, int *i)
+{
+	if (line && line[*i] == '|')
+	{
+		(*i)++;
+		while (line[*i] && line[*i] == ' ')
+			(*i)++;
+		if (line[*i] == '|')
+			return (0);
+	}
+	return (1);
+}
+
 int	successive_redirect(char *line)
 {
 	int	i;
@@ -75,7 +88,9 @@ int	successive_redirect(char *line)
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 			i += jump_to_next(line + i, line[i]);
-		if (line[i] == '>' || line[i] == '<' || line[i] == '|')
+		if (!check_pipe_redir(line, &i))
+			return (0);
+		if (line[i] == '>' || line[i] == '<')
 		{
 			if (check_multi_double(line + i, line[i], &i))
 				i--;
